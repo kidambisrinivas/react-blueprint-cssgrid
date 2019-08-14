@@ -9,6 +9,7 @@ import {
 } from "@blueprintjs/core";
 
 import { IPageNode } from "../pages/Pages";
+import { getPathFromRoute } from "../utils";
 
 export interface ISideMenuProps {
   activeRoute: string;
@@ -33,10 +34,11 @@ export class SideMenu extends React.PureComponent<
   }
 
   public renderPages(pages: IPageNode[]) {
+    const pathname = getPathFromRoute(this.props.activeRoute);
     const menu = pages.map(pageNode => {
       if (pageNode.isHeading) return <MenuDivider title={pageNode.title} />;
 
-      const isActive = pageNode.route === this.props.activeRoute;
+      const isActive = pageNode.route === pathname;
       const activeRoute = this.props.activeRoute;
       let props: IMenuItemProps = {
         // text: <Link to={pageNode.route}>{pageNode.title}</Link>,
