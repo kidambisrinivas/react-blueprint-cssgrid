@@ -1,3 +1,6 @@
+@import "~./css/dashboard.css";
+@import "~./css/login.css";
+
 .App {
   text-align: center;
 }

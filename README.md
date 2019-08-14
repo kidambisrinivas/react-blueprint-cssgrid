@@ -1,4 +1,36 @@
+# React Fronted App
+
+This service is a Create React App with FIXED top nav bar, customizable side menu and main page.
+It supports browsers HTML5 history API with react-router-dom browser history. You can also Search
+for pages using the search button in top nav bar and some refactoring
+
+## Built with
+
+- React typescript starter kit
+- Blueprintjs
+- CSS Grid for layout management
+
+Just add your page component `./src/pages/MyPage.tsx` and add it to the sidebar menu here:
+`./src/pages/Pages.tsx`
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Basic Files
+
+To get a basic dashboard layout up and running, please use create react app (with
+typescript support) to create a new app and then copy the following files to get started.
+
+Basic files to get a fixed top nav bar, fixed side menu and a main page layout
+
+- `./src/index.css`: blueprint css file and `./src/Dashboard.css` css files included
+- `./src/css/dashboard.css`: css added for dashboard page
+- `./src/css/login.css`: css added for login page
+- `./src/pages/Dashboard.tsx`: Main dashboard page which displays top nav bar, side menu and a main page based on route
+- `./src/pages/Pages.tsx`: Lists all pages of the dashboard app in one place for side menu and main page
+- `./src/pages/Login.tsx`: Login page layout
+- `./src/pages/React.tsx`: Basic react page
+- `./src/components/TopNavBar.tsx`: Top nav bar
+- `./src/components/SideMenu.tsx`: Side menu bar with links to all pages in the app
 
 ## Available Scripts
 

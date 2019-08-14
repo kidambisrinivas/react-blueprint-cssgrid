@@ -1,0 +1,55 @@
+.header-area {
+  grid-area: header;
+  /* font-size: 20px; */
+}
+.menu-area {
+  grid-area: menu;
+  display: flex; /* Will be hidden on mobile */
+  flex-direction: column;
+  background-color: #394263;
+  width: 14vw;
+  height: 91vh;
+  overflow: auto;
+  /* font-size: 30px; */
+}
+.main-area {
+  grid-area: main;
+  overflow: auto;
+  height: 89vh;
+}
+.footer-area {
+  grid-area: footer;
+  font-size: 5px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "menu main"
+    "menu footer";
+  grid-template-rows: 50px auto 10px;
+  grid-template-columns: 1fr 7fr;
+  grid-gap: 5px;
+  background-color: #ebf1f5;
+  /* padding: 5px; */
+}
+
+/* Stack the layout on small devices/viewports. */
+@media all and (max-width: 575px) {
+  grid-container {
+    grid-template-areas:
+      "header"
+      "menu"
+      "main"
+      "footer";
+    grid-template-rows: 20px 1fr 70px 1fr 10px;
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  /* padding: 5px 5px; */
+}
