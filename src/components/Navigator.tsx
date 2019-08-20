@@ -10,6 +10,7 @@ import { ItemListPredicate, ItemRenderer, Omnibar } from "@blueprintjs/select";
 import { IHeadingNode, IPageNode, isPageNode } from "@documentalist/client";
 import { filter } from "fuzzaldrin-plus";
 import * as React from "react";
+import { OnPageClickFn } from "../pages/Pages";
 
 export interface INavigatorProps {
   /** Whether navigator is open. */
@@ -18,7 +19,7 @@ export interface INavigatorProps {
   /** All potentially navigable items. */
   items: Array<IPageNode | IHeadingNode>;
 
-  onMenuItemClick: (currentRoute: string, newRoute: string) => void;
+  onMenuItemClick: OnPageClickFn;
 
   /** Callback to determine if a given item should be excluded. */
   itemExclude?: (node: IPageNode | IHeadingNode) => boolean;
@@ -126,7 +127,7 @@ export class Navigator extends React.PureComponent<INavigatorProps> {
 
   // updating location.hash will trigger hashchange event, which Documentation will receive and use to navigate.
   private handleItemSelect = (item: INavigationSection) => {
-    this.props.onMenuItemClick(window.location.pathname, item.route);
+    this.props.onMenuItemClick(item.route, item.title, false);
     this.props.onClose();
   };
 }

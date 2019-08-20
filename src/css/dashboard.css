@@ -6,8 +6,7 @@
   grid-area: menu;
   display: flex; /* Will be hidden on mobile */
   flex-direction: column;
-  background-color: #394263;
-  width: 14vw;
+  /* width: 14vw; */
   height: 91vh;
   overflow: auto;
   /* font-size: 30px; */
@@ -31,7 +30,19 @@
   grid-template-rows: 50px auto 10px;
   grid-template-columns: 1fr 7fr;
   grid-gap: 5px;
-  background-color: #ebf1f5;
+  /* padding: 5px; */
+}
+
+.grid-container-data-intensive {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "menu main"
+    "menu footer";
+  grid-template-rows: 50px auto 10px;
+  /* grid-template-columns: 1fr 34fr; */
+  grid-template-columns: 38px auto;
+  grid-gap: 5px;
   /* padding: 5px; */
 }
 
@@ -49,7 +60,95 @@
 }
 
 .grid-container > div {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.2);
   text-align: center;
   /* padding: 5px 5px; */
+}
+
+.navbar-padding {
+  /* padding-left: 20%; */
+  float: none;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card-lowpad {
+  padding: 5px;
+}
+
+.card-mediumpad {
+  padding: 10px;
+}
+
+.config-bar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.actions-bar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
+.table-list {
+  width: 100%;
+  vertical-align: center !important;
+  text-align: center !important;
+}
+
+@media only screen and (max-width: 644px) {
+  .config-bar {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .actions-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+  }
+}
+
+.status-red {
+  background-color: #9e2b0e !important;
+  color: #ffffff !important;
+}
+
+.status-green {
+  background-color: #1d7324 !important;
+  color: #ffffff !important;
+}
+
+.status-yellow {
+  background-color: #d99e0b !important;
+  color: #000000 !important;
+}
+
+.status-violet {
+  background-color: #1f4b99 !important;
+  color: #ffffff !important;
+}
+
+.status-turquoise {
+  background-color: #2ee6d6 !important;
+  color: #000000 !important;
+}
+
+.status-lightgreen {
+  background-color: #728c23 !important;
+  color: #ffffff !important;
+}
+
+.center-align {
+  text-align: center !important;
+  vertical-align: middle !important;
 }

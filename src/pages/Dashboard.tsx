@@ -1,12 +1,18 @@
 import React from "react";
-// import logo from "../logo.svg";
 import * as _ from "lodash";
-import { Classes, setHotkeysDialogProps } from "@blueprintjs/core";
 import * as H from "history";
+import DocumentTitle from "react-document-title";
+import { Classes, setHotkeysDialogProps } from "@blueprintjs/core";
 
 import { SideMenu } from "../components/SideMenu";
 import { TopNavBar } from "../components/TopNavBar";
-import { getPages, IPageNode, displayPage } from "./Pages";
+import {
+  getPages,
+  IPageNode,
+  displayPage,
+  getTitleForRoute,
+  isDataIntensivePage
+} from "./Pages";
 import { getCurrentRoute } from "../utils";
 
 const classNames = require("classnames");
@@ -20,30 +26,44 @@ export interface IDashboardState {
   themeName: string;
   pages: IPageNode[];
   activeRoute: string;
+  title: string;
 }
 
 export class Dashboard extends React.PureComponent<
   IDashboardProps,
   IDashboardState
 > {
+  private firstPage: boolean = true;
+
   public constructor(props: IDashboardProps) {
     super(props);
     const tn: string = getTheme();
     const ud: boolean = tn === DARK_THEME;
+    const pn = window.location.pathname;
     this.state = {
       useDarkTheme: ud,
       themeName: tn,
       pages: getPages(),
-      activeRoute: window.location.pathname
+      activeRoute: pn,
+      title: getTitleForRoute(pn)
     };
   }
 
-  private handleMenuItemClick = (currentRoute: string, newRoute: string) => {
+  private handleMenuItemClick = (
+    newRoute: string,
+    title: string,
+    replace: boolean
+  ) => {
     this.setState(state => {
-      const newState: IDashboardState = { ...state, activeRoute: newRoute };
+      const newState: IDashboardState = {
+        ...state,
+        activeRoute: newRoute,
+        title: title
+      };
       const historyState = { ...newState, pages: [] };
-      this.props.history.push(newRoute, historyState);
-      console.log(`NEXT_PAGE: ${JSON.stringify(historyState, null, 2)}`);
+      console.log(`DASH_NEXT_PAGE: ${JSON.stringify(historyState, null, 2)}`);
+      if (!replace) this.props.history.push(newRoute, historyState);
+      else this.props.history.replace(newRoute, historyState);
       return newState;
     });
   };
@@ -61,18 +81,29 @@ export class Dashboard extends React.PureComponent<
     this.setState(state => {
       if (_.isEmpty(historyState)) {
         let path = getCurrentRoute();
-        console.log(`HISTORY_STATE_NULL: Setting active route to ${path}`);
-        historyState = { activeRoute: path };
+        console.log(`DASH_HISTORY_NULL: Setting active route to ${path}`);
+        historyState = { activeRoute: path, title: getTitleForRoute(path) };
       }
-      console.log(`HISTORY_STATE: ${JSON.stringify(historyState)}`);
       const newState = {
         ...state,
         activeRoute: historyState.activeRoute,
+        title: historyState.title,
         useDarkTheme: historyState.useDarkTheme,
         themeName: historyState.themeName
       };
-      console.log(`PREV_PAGE:${JSON.stringify({ ...newState, pages: null })}`);
+      const str = JSON.stringify({ ...newState, pages: null });
+      console.log(`DASH_HISTORY: ${str}`);
       return newState;
+    });
+  };
+
+  public setTitle = (newTitle: string) => {
+    this.setState(state => {
+      if (this.firstPage) {
+        this.handleMenuItemClick(this.state.activeRoute, newTitle, true);
+        this.firstPage = false;
+      }
+      return { ...state, title: newTitle };
     });
   };
 
@@ -81,21 +112,22 @@ export class Dashboard extends React.PureComponent<
   };
 
   public render() {
-    const rootClasses = classNames(
-      "docs-root",
-      "grid-container",
-      { "docs-examples-only": window.location.search === "?examples" },
-      this.state.themeName
-    );
-    console.log(`RENDER_PATHNAME: ${window.location.pathname}`);
+    const pn = window.location.pathname;
+    const idpb = isDataIntensivePage(pn);
+    const idp = idpb ? "grid-container-data-intensive" : "grid-container";
+    const rootClasses = classNames("docs-root", idp, this.state.themeName);
+    const title = this.state.title;
+    const bgColor = this.state.useDarkTheme ? "#202B33" : "#ebf1f5";
+    console.log(`DASH_RENDER_PATH: ${pn}, title: ${title}`);
     return (
-      <React.Fragment>
-        <div className={rootClasses}>
+      <DocumentTitle title={title}>
+        <div className={rootClasses} style={{ backgroundColor: bgColor }}>
           <div className="header-area">
             <TopNavBar
               useDarkTheme={this.state.useDarkTheme}
               onToggleTheme={this.handleDarkSwitchChange}
               onMenuItemClick={this.handleMenuItemClick}
+              title={this.state.title}
             />
           </div>
           <div className="menu-area">
@@ -104,12 +136,13 @@ export class Dashboard extends React.PureComponent<
               items={this.state.pages}
               level={1}
               onMenuItemClick={this.handleMenuItemClick}
+              displayTooltip={idpb}
             />
           </div>
           <div className="main-area">{displayPage()}</div>
           <div className="footer-area">Footer</div>
         </div>
-      </React.Fragment>
+      </DocumentTitle>
     );
   }
 

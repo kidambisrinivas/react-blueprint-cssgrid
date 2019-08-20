@@ -5,18 +5,20 @@ import {
   Button,
   Navbar,
   NavbarGroup,
-  NavbarHeading
+  NavbarHeading,
+  H3
 } from "@blueprintjs/core";
 import { Navigator } from "./Navigator";
 import { Link } from "react-router-dom";
 
 import logo from "../logo.svg";
-import { appPages } from "../pages/Pages";
+import { appPages, OnPageClickFn } from "../pages/Pages";
 
 export interface ITopNavBarProps {
   useDarkTheme: boolean;
   onToggleTheme: (useDark: boolean) => void;
-  onMenuItemClick: (currentRoute: string, newRoute: string) => void;
+  onMenuItemClick: OnPageClickFn;
+  title: string;
 }
 
 export interface ITopNavBarState {
@@ -38,7 +40,7 @@ export class TopNavBar extends React.PureComponent<
     return (
       <Navbar>
         {/* Top navigation bar */}
-        <Navbar.Group align={Alignment.LEFT}>
+        <Navbar.Group align={Alignment.LEFT} style={{ width: "46%" }}>
           <NavbarHeading>
             <Link to="/" style={{ color: "white" }}>
               <img src={logo} style={{ height: "30px" }} alt="logo" />
@@ -46,8 +48,12 @@ export class TopNavBar extends React.PureComponent<
           </NavbarHeading>
           <Navbar.Divider />
           <Button className="bp3-minimal" icon="home" text="Home" />
-          <Button className="bp3-minimal" icon="document" text="Files" />
+          {/* <Button className="bp3-minimal" icon="document" text="Files" /> */}
         </Navbar.Group>
+
+        <div className="navbar-padding">
+          <H3 className="bp3-minimal">{this.props.title}</H3>
+        </div>
 
         <NavbarGroup align={Alignment.RIGHT}>
           <Button

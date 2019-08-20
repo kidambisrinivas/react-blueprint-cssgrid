@@ -7,6 +7,7 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 import * as doc from "@documentalist/client";
 
 import { ReactPage } from "./React";
+import { Jobs } from "./Jobs";
 
 export type Component =
   | React.ComponentType<RouteComponentProps<any>>
@@ -26,6 +27,13 @@ export interface IPageLink {
 export interface IPageNode extends IPageLink {
   children: IPageNode[] | null;
 }
+
+export type IPageProps = IPageLink & RouteComponentProps<any>;
+export type OnPageClickFn = (
+  newRoute: string,
+  title: string,
+  replace: boolean
+) => void;
 
 // AppPages registry: Stores all pages of the app to display link
 // in SideMenu bar as well as display page component in the main area
@@ -59,6 +67,7 @@ export function getPages(): IPageNode[] {
 
   const menu: IPageNode[] = [
     heading("User"),
+    page("/jobs/list", "Jobs List", "multi-select", "", Jobs),
     page("/cut", "Cut", "cut", "⌘X", ec),
     page("/copy", "Copy", "duplicate", "⌘C", ec),
     page("/paste", "Paste", "clipboard", "⌘V", ec, true),
@@ -92,6 +101,11 @@ export function getPages(): IPageNode[] {
   appPages.sideMenu = menu;
   appPages.search = buildPagesSearch(appPages.sideMenu, 1);
   return menu;
+}
+
+export function isDataIntensivePage(route: string): boolean {
+  if (route.match(/(?:\/jobs\/list|\/wrappers\/\w+)/)) return true;
+  else return false;
 }
 
 // Build index for app pages search
@@ -129,15 +143,32 @@ export function displayPage(): JSX.Element {
       <Route
         exact={true}
         path={pageNode.route}
-        render={props => <Page {...props} {...pageNode} />}
+        render={props => {
+          return <Page {...props} {...pageNode} />;
+        }}
       />
     );
   }
   let pageNotFound = page("/notfound", "Not found", "moon", "", ec);
   pagesComponents.push(
-    <Route render={props => <ReactPage {...props} {...pageNotFound} />} />
+    <Route
+      render={props => {
+        return <ReactPage {...props} {...pageNotFound} />;
+      }}
+    />
   );
   return <Switch>{pagesComponents}</Switch>;
+}
+
+// Get title for route. Used only on first page load
+// For menu item clicks, title is already available from props
+export function getTitleForRoute(route: string): string {
+  let title: string = "Console";
+  route = route.replace(/\?.*/, "");
+  for (let i = 0; i < appPages.pages.length; i++) {
+    if (appPages.pages[i].route === route) title = appPages.pages[i].title;
+  }
+  return title;
 }
 
 // Helpers to construct page nodes

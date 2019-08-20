@@ -1,12 +1,13 @@
 # React Fronted App
 
-* Create React App with FIXED top nav bar, customizable side menu and main page.
-* Supports browsers HTML5 history API with react-router-dom browser history.
-* Search for pages using the search button in top nav bar and some refactoring
+- Create React App with FIXED top nav bar, customizable side menu and main page.
+- Supports browsers HTML5 history API with react-router-dom browser history.
+- Search for pages using the search button in top nav bar and some refactoring
 
-![Dashboard](https://i.ibb.co/p1YRq4g/Screen-Shot-2019-08-14-at-12-13-52-PM.png)
-![LightMode](https://i.ibb.co/p0vQmcV/Screen-Shot-2019-08-14-at-12-14-05-PM.png")
-![Search Page](https://i.ibb.co/5v1gqPk/Screen-Shot-2019-08-14-at-12-14-17-PM.png")
+![LightMode](https://i.ibb.co/DzfZVPM/Screen-Shot-2019-08-20-at-8-36-06-AM.png)
+![DarkMode](https://i.ibb.co/ydvHq6Y/Screen-Shot-2019-08-20-at-8-36-18-AM.png)
+![Minimal tasks dashboard](https://i.ibb.co/fHc0qjJ/Screen-Shot-2019-08-20-at-5-03-31-PM.png)
+![Side bar](https://i.ibb.co/xJWRgLM/Screen-Shot-2019-08-20-at-8-35-53-AM.png)
 
 ## Built with
 

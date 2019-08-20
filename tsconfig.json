@@ -18,7 +18,6 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "noUnusedLocals": true,
     "strictNullChecks": true
   },
   "include": ["src"]

@@ -21,8 +21,8 @@ export class Login extends React.PureComponent<ILoginProps, {}> {
 
             <div className="form">
               <h3>
-                You need to be signed in with a valid Google account
-                to be able to access this web page
+                You need to be signed in with a valid Google account to be able
+                to access this web page
               </h3>
               <form action="" className="login-form">
                 <p className="full-width">
