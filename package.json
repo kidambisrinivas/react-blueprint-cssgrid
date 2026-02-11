@@ -18,7 +18,7 @@
     "react-document-title": "^2.0.3",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "REACT_APP_BASE_URL=$BASE_URL react-scripts start",
