@@ -12,7 +12,7 @@
     "classnames": "^2.2.6",
     "fuzzaldrin-plus": "^0.6.0",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.23",
     "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-document-title": "^2.0.3",
